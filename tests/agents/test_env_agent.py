@@ -15,7 +15,8 @@ async def test_chat_streamed():
             "please use `edit_file` to add a line into the test file with one line `test line`",
         ]:
             print(prompt.center(80, "-"))
-            await agent.chat_streamed(prompt)
+            recorder = await agent.chat_streamed(prompt)
+            print(recorder)
 
 
 if __name__ == "__main__":

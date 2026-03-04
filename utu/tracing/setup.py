@@ -4,24 +4,66 @@ https://github.com/Arize-ai/openinference/tree/main/python/instrumentation/openi
 session-level tracing in @phoenix https://arize.com/docs/phoenix/tracing/how-to-tracing/setup-tracing/setup-sessions
 """
 
-from agents import add_trace_processor, set_tracing_disabled
-from openinference.instrumentation.openai import OpenAIInstrumentor
+import json
+from typing import Any, cast
 
-# from openinference.instrumentation.openai_agents import OpenAIAgentsInstrumentor
-# from phoenix.otel import TracerProvider, register
+from agents import add_trace_processor, set_tracing_disabled
+from agents.tracing import Trace
+from openinference.instrumentation.openai import OpenAIInstrumentor
+from openinference.instrumentation.openai_agents import OpenAIAgentsInstrumentor
+from openinference.instrumentation.openai_agents._processor import OpenInferenceTracingProcessor
 from openinference.semconv.resource import ResourceAttributes
+from openinference.semconv.trace import SpanAttributes
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import Resource, TracerProvider
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
+from opentelemetry.trace import Tracer
 
 from ..utils import EnvUtils, SQLModelUtils, get_logger
 from .db_tracer import DBTracingProcessor
-from .otel_agents_instrumentor import OpenAIAgentsInstrumentor
 
 logger = get_logger(__name__)
 
 OTEL_TRACING_PROVIDER: TracerProvider | None = None
 DB_TRACING_PROCESSOR: DBTracingProcessor | None = None
+
+
+class _UTUTracingProcessor(OpenInferenceTracingProcessor):
+    """Thin subclass that injects trace_id into Phoenix metadata."""
+
+    def on_trace_start(self, trace: Trace) -> None:
+        super().on_trace_start(trace)
+        if root_span := self._root_spans.get(trace.trace_id):
+            root_span.set_attribute(
+                SpanAttributes.METADATA,
+                json.dumps({"trace_id": trace.trace_id}),
+            )
+
+
+class _UTUAgentsInstrumentor(OpenAIAgentsInstrumentor):
+    """Use our custom processor that injects trace_id."""
+
+    def _instrument(self, **kwargs: Any) -> None:
+        from openinference.instrumentation import OITracer, TraceConfig
+        from opentelemetry import trace as trace_api
+
+        if not (tracer_provider := kwargs.get("tracer_provider")):
+            tracer_provider = trace_api.get_tracer_provider()
+        exclusive_processor = kwargs.get("exclusive_processor", True)
+        config = kwargs.get("config") or TraceConfig()
+
+        tracer = OITracer(
+            trace_api.get_tracer(__name__, tracer_provider=tracer_provider),
+            config=config,
+        )
+        processor = _UTUTracingProcessor(cast(Tracer, tracer))
+
+        if exclusive_processor:
+            from agents import set_trace_processors
+
+            set_trace_processors([processor])
+        else:
+            add_trace_processor(processor)
 
 
 def setup_otel_tracing(
@@ -62,7 +104,7 @@ def setup_otel_tracing(
     # instrument
     OpenAIInstrumentor().instrument(tracer_provider=OTEL_TRACING_PROVIDER)
     # use `set_trace_processors` instead of `add_trace_processor` to remove default processors
-    OpenAIAgentsInstrumentor().instrument(tracer_provider=OTEL_TRACING_PROVIDER, exclusive_processor=True)
+    _UTUAgentsInstrumentor().instrument(tracer_provider=OTEL_TRACING_PROVIDER, exclusive_processor=True)
 
 
 def setup_db_tracing() -> None:

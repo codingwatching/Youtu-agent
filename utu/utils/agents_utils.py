@@ -136,7 +136,9 @@ class AgentsUtils:
             timeout=100,
         )
         if type == "chat.completions":
-            return OpenAIChatCompletionsModel(model=model, openai_client=openai_client)
+            from ..models.reasoning_chat_completions import ReasoningChatCompletionsModel
+
+            return ReasoningChatCompletionsModel(model=model, openai_client=openai_client)
         elif type == "responses":
             return OpenAIResponsesModel(model=model, openai_client=openai_client)
         else:

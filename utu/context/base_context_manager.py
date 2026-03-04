@@ -1,4 +1,6 @@
-from agents import RunContextWrapper, TContext, TResponseInputItem
+from typing import Any
+
+from agents import TResponseInputItem
 
 from ..utils import get_logger
 
@@ -10,7 +12,7 @@ class BaseContextManager:
         self.config = config or {}
 
     def preprocess(
-        self, input: str | list[TResponseInputItem], run_context: RunContextWrapper[TContext] = None
+        self, input: str | list[TResponseInputItem], context: dict[str, Any] | None = None
     ) -> str | list[TResponseInputItem]:
         return input
 
@@ -24,14 +26,11 @@ class DummyContextManager(BaseContextManager):
         )
 
     def preprocess(
-        self, input: str | list[TResponseInputItem], run_context: RunContextWrapper[TContext] = None
+        self, input: str | list[TResponseInputItem], context: dict[str, Any] | None = None
     ) -> str | list[TResponseInputItem]:
-        # NOTE: filter type="reasoning" items for vllm cannot process it for now!
-        # return ChatCompletionConverter.filter_items(input)
+        if context is None:
+            return input
 
-        # handle MaxTurnsExceeded
-        context: dict = run_context.context
-        assert isinstance(context, dict), "run_context.context should be a dict"
         current_turn, max_turns = context.get("current_turn"), context.get("max_turns")
         logger.debug(f"Current turn: {current_turn}, Max turns: {max_turns}")
         if current_turn is not None and max_turns is not None and current_turn == max_turns:

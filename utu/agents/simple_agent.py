@@ -25,6 +25,7 @@ from ..db import DBService, TrajectoryModel
 from ..env import _BaseEnv, get_env
 from ..hooks import get_run_hooks
 from ..runner import get_runner
+from ..runner.filters import utu_input_filter
 from ..tools import TOOLKIT_MAP, AsyncBaseToolkit
 from ..utils import AgentsMCPUtils, AgentsUtils, get_logger, load_class_from_file
 from .common import QueueCompleteSentinel, TaskRecorder
@@ -217,6 +218,7 @@ class SimpleAgent:
             model=self.current_agent.model,
             model_settings=self.config.model.model_settings,
             workflow_name=self.config.agent.name,
+            call_model_input_filter=utu_input_filter,
         )
         return run_config
 
@@ -225,6 +227,7 @@ class SimpleAgent:
             "context_manager": self.context_manager,
             "env": self.env,
             "agent_config": self.config,
+            "max_turns": self.config.max_turns,
         }
 
     def _prepare_run_kwargs(self, input: str | list[TResponseInputItem]) -> dict:

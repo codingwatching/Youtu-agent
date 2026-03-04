@@ -1,6 +1,8 @@
 from typing import Any
 
-from agents import AgentBase, RunContextWrapper, RunHooks, TContext, Tool
+from agents import Agent, AgentBase, RunContextWrapper, RunHooks, TContext, Tool
+from agents.items import ModelResponse
+from agents.run_context import AgentHookContext
 from agents.tool_context import ToolContext
 from typing_extensions import TypeVar
 
@@ -14,13 +16,19 @@ class BaseRunHooks(RunHooks):
     def __init__(self):
         self.tool_result_max_length = 5000
 
-    # on_llm_start, on_llm_end
+    async def on_llm_end(
+        self, context: RunContextWrapper[TContext], agent: Agent[TContext], response: ModelResponse
+    ) -> None:
+        """Record total_tokens on the context so the input filter can enforce token budgets."""
+        ctx = context.context
+        if isinstance(ctx, dict) and response.usage:
+            ctx["__utu_last_total_tokens"] = response.usage.total_tokens
 
-    async def on_agent_start(self, context: RunContextWrapper[TContext], agent: TAgent) -> None:
+    async def on_agent_start(self, context: AgentHookContext[TContext], agent: TAgent) -> None:
         """Called before the agent is invoked. Called each time the current agent changes."""
         pass
 
-    async def on_agent_end(self, context: RunContextWrapper[TContext], agent: TAgent, output: Any) -> None:
+    async def on_agent_end(self, context: AgentHookContext[TContext], agent: TAgent, output: Any) -> None:
         """Called when the agent produces a final output."""
         pass
 

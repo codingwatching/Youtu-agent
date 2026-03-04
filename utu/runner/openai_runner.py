@@ -552,9 +552,8 @@ class UTUAgentRunner(AgentRunner):
     ) -> list[TResponseInputItem]:
         if context_wrapper.context:
             context_manager: BaseContextManager = context_wrapper.context.get("context_manager", None)
-            input = context_manager.preprocess(input, context_wrapper)
+            input = context_manager.preprocess(input, context_wrapper.context)
         return input
-        # print(f"< [DEBUG] input: {input}")
 
     @classmethod
     def _check_too_long(

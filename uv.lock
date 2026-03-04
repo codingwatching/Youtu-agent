@@ -3626,7 +3626,7 @@ wheels = [
 
 [[package]]
 name = "openinference-instrumentation-openai"
-version = "0.1.32"
+version = "0.1.41"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "openinference-instrumentation" },
@@ -3637,18 +3637,36 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "wrapt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b4/88/b64983fdfce44990dca65e1528b8cd3427ed21a74045960661266a6d4ec0/openinference_instrumentation_openai-0.1.32.tar.gz", hash = "sha256:4e24fb0a97ae33c474b0897cccd95ed5c737a7076696fd4fc791704fc30484a4", size = 22647, upload-time = "2025-09-08T19:07:23.139Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/66/06/77b2fe7171336f71313936daf1b644a9968da85ff0b473a03ca05cc3d5c1/openinference_instrumentation_openai-0.1.41.tar.gz", hash = "sha256:ef4db680986a613b1639720f9beaa315c9e388c20bc985dbbbdf0f4df007c6e9", size = 22848, upload-time = "2025-12-04T19:58:35.349Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/48/c3/905559f5dc45b4cb142e3d777e20ff42390ee244d161718385c9e94189c2/openinference_instrumentation_openai-0.1.32-py3-none-any.whl", hash = "sha256:4776a5890f7c6472039131f86fdc5f722479fb7ffe796cc121c67c30572264f1", size = 30058, upload-time = "2025-09-08T19:07:21.616Z" },
+    { url = "https://files.pythonhosted.org/packages/a1/db/48f1f540d335f98fa67891e9c25ad56020be7e7b2c0d4fd5014875fe5ddf/openinference_instrumentation_openai-0.1.41-py3-none-any.whl", hash = "sha256:6fad453446835e51333b660882eacababbf1052689ca53cba444a7d97fa2e910", size = 30273, upload-time = "2025-12-04T19:58:34.17Z" },
+]
+
+[[package]]
+name = "openinference-instrumentation-openai-agents"
+version = "1.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "openinference-instrumentation" },
+    { name = "openinference-semantic-conventions" },
+    { name = "opentelemetry-api" },
+    { name = "opentelemetry-instrumentation" },
+    { name = "opentelemetry-semantic-conventions" },
+    { name = "typing-extensions" },
+    { name = "wrapt" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f4/40/ac0a3ad5040d2582156f6c0fa2b8f6233af79af295dab154d642d42aed69/openinference_instrumentation_openai_agents-1.4.0.tar.gz", hash = "sha256:2fd50d03f6d999b9793566a1f2787bf9e2cd3774fa8bf32542250dfc61e32d62", size = 12746, upload-time = "2025-12-04T19:58:36.319Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c6/e5/299103b68f5427a7d11acd0f4804c5b3f3e9508a511f8f8078a43ad7e6bd/openinference_instrumentation_openai_agents-1.4.0-py3-none-any.whl", hash = "sha256:539361d0f3bdebdb1e898250fbba8e6173f2bce9d7ba007cf7934f10850f474b", size = 14411, upload-time = "2025-12-04T19:58:34.224Z" },
 ]
 
 [[package]]
 name = "openinference-semantic-conventions"
-version = "0.1.21"
+version = "0.1.27"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/75/0f/b794eb009846d4b10af50e205a323ca359f284563ef4d1778f35a80522ac/openinference_semantic_conventions-0.1.21.tar.gz", hash = "sha256:328405b9f79ff72a659c7712b8429c0d7ea68c6a4a1679e3eb44372aa228119b", size = 12534, upload-time = "2025-06-13T05:22:18.982Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b4/cf/7c0ea344b99ecdb9f55cb5287ecb6a6ad68e6098df32728691fa7846f112/openinference_semantic_conventions-0.1.27.tar.gz", hash = "sha256:db0b1bbc1cd66f8108b17f972976fa1833413a01967ff930e2707a77e0f66bd3", size = 12744, upload-time = "2026-03-04T08:38:56.974Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6e/4d/092766f8e610f2c513e483c4adc892eea1634945022a73371fe01f621165/openinference_semantic_conventions-0.1.21-py3-none-any.whl", hash = "sha256:acde8282c20da1de900cdc0d6258a793ec3eb8031bfc496bd823dae17d32e326", size = 10167, upload-time = "2025-06-13T05:22:18.118Z" },
+    { url = "https://files.pythonhosted.org/packages/27/b4/1c218ed1e68c8fbd68f37258ce40f908cdad86ee9d38b12c48c9e4c4e030/openinference_semantic_conventions-0.1.27-py3-none-any.whl", hash = "sha256:3871fd2cc9d203bdb444ab66ff2ba9bdbf1013dc48c64c5700dd449d47b338c5", size = 10430, upload-time = "2026-03-04T08:38:56.166Z" },
 ]
 
 [[package]]
@@ -6986,6 +7004,7 @@ dependencies = [
     { name = "mcp" },
     { name = "openai-agents" },
     { name = "openinference-instrumentation-openai" },
+    { name = "openinference-instrumentation-openai-agents" },
     { name = "opentelemetry-exporter-otlp" },
     { name = "prompt-toolkit" },
     { name = "psycopg2-binary" },
@@ -7106,7 +7125,8 @@ requires-dist = [
     { name = "matplotlib", marker = "extra == 'ppt-gen'", specifier = ">=3.10.6" },
     { name = "mcp", specifier = ">=1.12.3" },
     { name = "openai-agents", specifier = "==0.10.4" },
-    { name = "openinference-instrumentation-openai", specifier = ">=0.1.30" },
+    { name = "openinference-instrumentation-openai", specifier = ">=0.1.41" },
+    { name = "openinference-instrumentation-openai-agents", specifier = ">=1.4.0" },
     { name = "openpyxl", marker = "extra == 'documents'", specifier = ">=3.1.5" },
     { name = "opentelemetry-exporter-otlp", specifier = ">=1.37.0" },
     { name = "pexpect", marker = "extra == 'local-bash'", specifier = ">=4.9.0" },

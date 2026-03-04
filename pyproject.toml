@@ -22,7 +22,9 @@ dependencies = [
     "mcp>=1.12.3",
     "openai-agents==0.10.4",
     # https://github.com/Arize-ai/openinference/tree/main/python/instrumentation/openinference-instrumentation-openai
-    "openinference-instrumentation-openai>=0.1.30",
+    "openinference-instrumentation-openai>=0.1.41",
+    # https://github.com/Arize-ai/openinference/tree/main/python/instrumentation/openinference-instrumentation-openai-agents
+    "openinference-instrumentation-openai-agents>=1.4.0",
     # https://opentelemetry.io/docs/languages/python/
     "opentelemetry-exporter-otlp>=1.37.0",
     "prompt-toolkit>=3.0.52",

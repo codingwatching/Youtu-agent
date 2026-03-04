@@ -167,16 +167,111 @@ class ReasoningChatCompletionsModel(OpenAIChatCompletionsModel):
 
             @classmethod  # type: ignore[misc]
             def patched_items_to_messages(cls, items, model=None, **kw):  # type: ignore[no-untyped-def]
-                # Force the DeepSeek code path so reasoning items are converted
-                # to reasoning_content in assistant messages
-                messages = original_items_to_messages.__func__(cls, items, model=f"deepseek-{model}", **kw)
-                # Rewrite reasoning_content to the strategy-specific field
-                for msg in messages:
-                    if msg.get("role") != "assistant":
+                # The upstream Converter's DeepSeek reasoning path has ordering
+                # assumptions that break for other models (e.g. GLM-5):
+                #   - It stores reasoning in pending_reasoning_content
+                #   - But flush_assistant_message() clears it when the next
+                #     item is a response_output_message (which calls flush
+                #     before current_assistant_msg exists).
+                #
+                # Instead of hacking the DeepSeek path, we handle reasoning
+                # entirely ourselves:
+                # 1. Extract reasoning text from reasoning items.
+                # 2. Track which response_output_message each reasoning
+                #    belongs to (the immediately following one).
+                # 3. Run the converter on items stripped of reasoning items.
+                # 4. Post-inject reasoning into the correct assistant messages.
+
+                # --- Pass 1: extract reasoning & build stripped item list ---
+                stripped_items: list = []
+                pending_reasoning: str | None = None
+                # Maps index in stripped_items to reasoning text
+                reasoning_map: dict[int, str] = {}
+
+                for item in items:
+                    if isinstance(item, dict) and item.get("type") == "reasoning":
+                        # Extract reasoning text from content field
+                        content_items = item.get("content", [])
+                        texts = [
+                            c["text"]
+                            for c in content_items
+                            if isinstance(c, dict)
+                            and c.get("type") == "reasoning_text"
+                            and c.get("text")
+                        ]
+                        # Fallback to summary field
+                        if not texts:
+                            summary_items = item.get("summary", [])
+                            texts = [
+                                s["text"]
+                                for s in summary_items
+                                if isinstance(s, dict) and s.get("text")
+                            ]
+                        if texts:
+                            reasoning_text = "\n".join(texts)
+                            if pending_reasoning:
+                                pending_reasoning += "\n" + reasoning_text
+                            else:
+                                pending_reasoning = reasoning_text
+                        # Don't add reasoning items to stripped list
                         continue
-                    reasoning_text = msg.pop("reasoning_content", None)
-                    if reasoning_text:
-                        self._reasoning_strategy.inject_reasoning(msg, reasoning_text)
+
+                    if pending_reasoning is not None:
+                        # Attach pending reasoning to the next non-reasoning item
+                        reasoning_map[len(stripped_items)] = pending_reasoning
+                        pending_reasoning = None
+                    stripped_items.append(item)
+
+                # --- Pass 2: run the normal converter on stripped items ---
+                messages = original_items_to_messages.__func__(
+                    cls, stripped_items, model=model, **kw
+                )
+
+                # --- Pass 3: inject reasoning into assistant messages ---
+                # Build a mapping from stripped_items index to output message
+                # index.  The converter produces one message per "flush" or
+                # explicit append.  We walk stripped_items, and for each item
+                # that produces an assistant message we find the corresponding
+                # output message.
+                #
+                # Simplified strategy: each item at an index in reasoning_map
+                # is a response_output_message (type=message, role=assistant).
+                # These become assistant messages in the output.  We count
+                # assistant messages in output order and match them to the
+                # ordered reasoning_map entries.
+                if reasoning_map:
+                    # Identify which stripped item indices have reasoning
+                    reasoning_indices = sorted(reasoning_map.keys())
+                    # Count how many response_output_messages appear before
+                    # each reasoning-bearing index to find the output msg idx.
+                    asst_count = 0
+                    reasoning_iter = iter(reasoning_indices)
+                    next_target = next(reasoning_iter, None)
+                    # Map: output assistant message index -> reasoning text
+                    output_reasoning: dict[int, str] = {}
+                    for si_idx, si_item in enumerate(stripped_items):
+                        is_resp_output = (
+                            isinstance(si_item, dict)
+                            and si_item.get("type") == "message"
+                            and si_item.get("role") == "assistant"
+                        )
+                        if si_idx == next_target:
+                            if is_resp_output:
+                                output_reasoning[asst_count] = reasoning_map[si_idx]
+                            next_target = next(reasoning_iter, None)
+                        if is_resp_output:
+                            asst_count += 1
+
+                    # Now apply reasoning to the Nth assistant message
+                    asst_idx = 0
+                    for msg in messages:
+                        if msg.get("role") == "assistant":
+                            if asst_idx in output_reasoning:
+                                self._reasoning_strategy.inject_reasoning(
+                                    msg, output_reasoning[asst_idx]
+                                )
+                            asst_idx += 1
+
                 return messages
 
             Converter.items_to_messages = patched_items_to_messages  # type: ignore[assignment]

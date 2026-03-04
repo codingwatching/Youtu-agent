@@ -1,8 +1,8 @@
 from typing import Literal
 
 from agents import RunConfig, Runner
+from agents.run import AgentRunner
 
-from .openai_runner import UTUAgentRunner
 from .react_runner import ReactRunner
 
 
@@ -19,7 +19,7 @@ def get_runner(name: Literal["openai", "react"] = "openai") -> object:
     if name == "react":
         return ReactRunner
     elif name == "openai":
-        return UTUAgentRunner()
+        return AgentRunner()
     else:
         raise ValueError(f"Unknown runner name: {name}")
 

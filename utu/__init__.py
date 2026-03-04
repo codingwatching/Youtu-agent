@@ -1,6 +1,4 @@
 # ruff: noqa
-from agents.run import set_default_agent_runner
-
 from .utils import EnvUtils, setup_logging
 from .tracing import setup_tracing
 

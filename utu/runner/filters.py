@@ -47,6 +47,7 @@ def utu_input_filter(data: CallModelData[Any]) -> ModelInputData:
 # 1. Turn counter
 # ---------------------------------------------------------------------------
 
+
 def _inject_turn_info(ctx: dict[str, Any]) -> None:
     """Increment and store ``current_turn`` on the context dict.
 
@@ -62,6 +63,7 @@ def _inject_turn_info(ctx: dict[str, Any]) -> None:
 # 2. Context-manager preprocessing
 # ---------------------------------------------------------------------------
 
+
 def _apply_context_manager(
     model_data: ModelInputData,
     ctx: dict[str, Any],
@@ -75,6 +77,7 @@ def _apply_context_manager(
 # ---------------------------------------------------------------------------
 # 3. Token-budget enforcement
 # ---------------------------------------------------------------------------
+
 
 def _enforce_token_budget(
     model_data: ModelInputData,
@@ -99,16 +102,14 @@ def _enforce_token_budget(
         return
 
     logger.warning(
-        "Token budget exceeded (last_total=%d, max=%d). "
-        "Injecting stop-tool message.",
+        "Token budget exceeded (last_total=%d, max=%d). Injecting stop-tool message.",
         last_total,
         max_tokens,
     )
     stop_msg: TResponseInputItem = {
         "role": "user",
         "content": (
-            "You have exceeded the token budget. "
-            "Please DO NOT use ANY tools, provide your final answer immediately."
+            "You have exceeded the token budget. Please DO NOT use ANY tools, provide your final answer immediately."
         ),
     }
     model_data.input.append(stop_msg)

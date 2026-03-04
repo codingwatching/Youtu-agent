@@ -69,6 +69,7 @@ openspec/
 # Misc
 # temp files
 # _*
+.scribe/
 .NOTES
 # temp config
 test.yaml

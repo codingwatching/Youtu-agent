@@ -40,3 +40,7 @@ async def test_init_toolkit():
         tools = await agent.get_tools()
         print(f"Loaded {len(tools)} tools: {tools}")
         await agent.chat_streamed("That's the weather in Beijing today?")
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v", "-s", "-k", "test_chat_streamed"]) 

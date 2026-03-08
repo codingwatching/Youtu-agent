@@ -98,7 +98,8 @@ class SWERexEnv(BaseEnv):
         ags_kwargs = {}
         # Map config keys to TencentAGSDeployment kwargs.
         _AGS_KEYS = [
-            "secret_id", "secret_key", "region", "domain", "tool_id",
+            "secret_id", "secret_key", "http_endpoint", "skip_ssl_verify",
+            "region", "domain", "tool_id",
             "image", "image_registry_type", "role_arn",
             "cpu", "memory", "timeout", "port",
             "startup_timeout", "runtime_timeout",

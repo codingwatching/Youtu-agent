@@ -66,7 +66,8 @@ image = ["pillow>=11.3.0"]
 video = ["google-genai>=1.38.0"]
 utils = ["docker>=7.1.0", "tiktoken>=0.11.0"]
 swerex = [
-    "swe-rex>=1.4.0",
+    # AGS-patched fork of swe-rex (adds swerex.deployment.ags + swerex.runtime.ags)
+    "swe-rex @ git+https://github.com/csjgg/ags-cookbook.git@feat/sweagent#subdirectory=examples/swe-agent/SWE-ReX",
     "tencentcloud-sdk-python-ags",
     "tencentcloud-sdk-python-common",
 ]
@@ -117,6 +118,9 @@ rl = ["aiolimiter>=1.2.1", "tencentcloud-sdk-python>=3.0.1474"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["utu"]

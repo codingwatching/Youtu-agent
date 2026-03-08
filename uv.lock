@@ -199,6 +199,15 @@ wheels = [
 ]
 
 [[package]]
+name = "annotated-doc"
+version = "0.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/57/ba/046ceea27344560984e26a590f90bc7f4a75b06701f653222458922b558c/annotated_doc-0.0.4.tar.gz", hash = "sha256:fbcda96e87e9c92ad167c2e53839e57503ecfda18804ea28102353485033faa4", size = 7288, upload-time = "2025-11-10T22:07:42.062Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1e/d3/26bf1008eb3d2daa8ef4cacc7f3bfdc11818d111f7e2d0201bc6e3b49d45/annotated_doc-0.0.4-py3-none-any.whl", hash = "sha256:571ac1dc6991c450b25a9c2d84a3705e2ae7a53467b5d111c24fa8baabbed320", size = 5303, upload-time = "2025-11-10T22:07:40.673Z" },
+]
+
+[[package]]
 name = "annotated-types"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -370,6 +379,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/10/bf/fa31834dc27a7f05e5290eae47c82690edc3a7b37d58f7fb35a1bdbf355b/backrefs-5.9-py313-none-any.whl", hash = "sha256:cc37b19fa219e93ff825ed1fed8879e47b4d89aa7a1884860e2db64ccd7c676b", size = 399843, upload-time = "2025-06-22T19:34:09.68Z" },
     { url = "https://files.pythonhosted.org/packages/fc/24/b29af34b2c9c41645a9f4ff117bae860291780d73880f449e0b5d948c070/backrefs-5.9-py314-none-any.whl", hash = "sha256:df5e169836cc8acb5e440ebae9aad4bf9d15e226d3bad049cf3f6a5c20cc8dc9", size = 411762, upload-time = "2025-06-22T19:34:11.037Z" },
     { url = "https://files.pythonhosted.org/packages/41/ff/392bff89415399a979be4a65357a41d92729ae8580a66073d8ec8d810f98/backrefs-5.9-py39-none-any.whl", hash = "sha256:f48ee18f6252b8f5777a22a00a09a85de0ca931658f1dd96d4406a34f3748c60", size = 380265, upload-time = "2025-06-22T19:34:12.405Z" },
+]
+
+[[package]]
+name = "bashlex"
+version = "0.18"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/60/aae0bb54f9af5e0128ba90eb83d8d0d506ee8f0475c4fdda3deeda20b1d2/bashlex-0.18.tar.gz", hash = "sha256:5bb03a01c6d5676338c36fd1028009c8ad07e7d61d8a1ce3f513b7fff52796ee", size = 68742, upload-time = "2023-01-18T15:21:26.402Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f4/be/6985abb1011fda8a523cfe21ed9629e397d6e06fb5bae99750402b25c95b/bashlex-0.18-py2.py3-none-any.whl", hash = "sha256:91d73a23a3e51711919c1c899083890cdecffc91d8c088942725ac13e9dcfffa", size = 69539, upload-time = "2023-01-18T15:21:24.167Z" },
 ]
 
 [[package]]
@@ -1252,6 +1270,22 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/41/43/948d10bf42735709edb5ae51e23297d034086f17fc7279fef385a7acb473/fake_useragent-2.2.0.tar.gz", hash = "sha256:4e6ab6571e40cc086d788523cf9e018f618d07f9050f822ff409a4dfe17c16b2", size = 158898, upload-time = "2025-04-14T15:32:19.238Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/51/37/b3ea9cd5558ff4cb51957caca2193981c6b0ff30bd0d2630ac62505d99d0/fake_useragent-2.2.0-py3-none-any.whl", hash = "sha256:67f35ca4d847b0d298187443aaf020413746e56acd985a611908c73dba2daa24", size = 161695, upload-time = "2025-04-14T15:32:17.732Z" },
+]
+
+[[package]]
+name = "fastapi"
+version = "0.135.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "annotated-doc" },
+    { name = "pydantic" },
+    { name = "starlette" },
+    { name = "typing-extensions" },
+    { name = "typing-inspection" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e7/7b/f8e0211e9380f7195ba3f3d40c292594fd81ba8ec4629e3854c353aaca45/fastapi-0.135.1.tar.gz", hash = "sha256:d04115b508d936d254cea545b7312ecaa58a7b3a0f84952535b4c9afae7668cd", size = 394962, upload-time = "2026-03-01T18:18:29.369Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e4/72/42e900510195b23a56bde950d26a51f8b723846bfcaa0286e90287f0422b/fastapi-0.135.1-py3-none-any.whl", hash = "sha256:46e2fc5745924b7c840f71ddd277382af29ce1cdb7d5eab5bf697e3fb9999c9e", size = 116999, upload-time = "2026-03-01T18:18:30.831Z" },
 ]
 
 [[package]]
@@ -5955,6 +5989,25 @@ wheels = [
 ]
 
 [[package]]
+name = "swe-rex"
+version = "1.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "bashlex" },
+    { name = "fastapi" },
+    { name = "pexpect" },
+    { name = "pydantic" },
+    { name = "python-multipart" },
+    { name = "requests" },
+    { name = "rich" },
+    { name = "uvicorn" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/94/86/a069f93ec866151a4d476d546e60220e66b3788878b6e248b2df3ab2c5f1/swe_rex-1.4.0.tar.gz", hash = "sha256:14f8a24c49a63f9e251340b1109ac75a4aacbaece410f8599209de9bfca843c0", size = 41755, upload-time = "2025-08-14T01:19:20.22Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/98/0d/d06ab2aa78138055c297490762cd7b4d8ac58a544783f874c869cdb7b534/swe_rex-1.4.0-py3-none-any.whl", hash = "sha256:61261ad03eb23b717b5901cd5d229f24f6e1be2e120aad5c2e5ea3384a1d15ad", size = 47756, upload-time = "2025-08-14T01:19:18.93Z" },
+]
+
+[[package]]
 name = "sympy"
 version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
@@ -5994,6 +6047,30 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/dc/c9/7a8d034e2a83a260f6ebb27a21d50603d7375dc5e5cdecdc328477ac7067/tencentcloud-sdk-python-3.0.1474.tar.gz", hash = "sha256:b6d85b34bd4555185dbdab8172ec4e84aaa7d55da77a5fd496e51635c7617b3e", size = 12216090, upload-time = "2025-10-11T07:35:16.015Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6a/3c/d9c3db02573638a04e28accca1a6ce8d0e0323d5e023320a94240175c4d0/tencentcloud_sdk_python-3.0.1474-py2.py3-none-any.whl", hash = "sha256:65e20017b689fe04843d72d5a92752c08c00201c924d71bac691192615ed37dd", size = 12901932, upload-time = "2025-10-11T07:16:25.136Z" },
+]
+
+[[package]]
+name = "tencentcloud-sdk-python-ags"
+version = "3.1.49"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tencentcloud-sdk-python-common" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6e/e7/1412bbd06e83ad5f83ee10dec3edae2a76dbb83ca2dd7c77e53c07901825/tencentcloud_sdk_python_ags-3.1.49.tar.gz", hash = "sha256:4cd26e77fd47ca93d8d29edd9f80d5eb3729b4f4d70978cb6e55aa8b2dba4993", size = 18081, upload-time = "2026-02-27T10:08:39.579Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/33/e7/327b354830a0837269af7ddb20b2bf334d1737841c3ea987e53ac82b65b7/tencentcloud_sdk_python_ags-3.1.49-py2.py3-none-any.whl", hash = "sha256:8cde1f2b6e6b54b5d4947d1cd1646d110c2d369881b5a5cc262bc7605f3d2aea", size = 20918, upload-time = "2026-02-27T10:08:38.304Z" },
+]
+
+[[package]]
+name = "tencentcloud-sdk-python-common"
+version = "3.1.50"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/33/e3/ccb35f2c6cc6ec63f078fd203eb61a5ca641db59ac31ff5e6f9a717923ec/tencentcloud_sdk_python_common-3.1.50.tar.gz", hash = "sha256:804b4d39b43253b56a1987430d6caea0a400e13c7f5643bd8c031697fddfa0d2", size = 22665, upload-time = "2026-03-02T05:06:57.793Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7c/ac/0e37b46f28281462681d91dc558bac79153d9ae3fff0fb7c859625aeb3da/tencentcloud_sdk_python_common-3.1.50-py2.py3-none-any.whl", hash = "sha256:0a3e28833935d61e4b876e2761a79080f987df361585d9f652300ef4284fab76", size = 34263, upload-time = "2026-03-02T05:06:55.262Z" },
 ]
 
 [[package]]
@@ -7057,6 +7134,11 @@ scholar = [
 search = [
     { name = "crawl4ai" },
 ]
+swerex = [
+    { name = "swe-rex" },
+    { name = "tencentcloud-sdk-python-ags" },
+    { name = "tencentcloud-sdk-python-common" },
+]
 utils = [
     { name = "docker" },
     { name = "tiktoken" },
@@ -7145,11 +7227,14 @@ requires-dist = [
     { name = "scipy", marker = "extra == 'local-python'", specifier = ">=1.15.3" },
     { name = "seaborn", marker = "extra == 'local-python'", specifier = ">=0.13.2" },
     { name = "sqlmodel", specifier = ">=0.0.24" },
+    { name = "swe-rex", marker = "extra == 'swerex'", specifier = ">=1.4.0" },
+    { name = "tencentcloud-sdk-python-ags", marker = "extra == 'swerex'" },
+    { name = "tencentcloud-sdk-python-common", marker = "extra == 'swerex'" },
     { name = "tiktoken", marker = "extra == 'utils'", specifier = ">=0.11.0" },
     { name = "unstructured", extras = ["all-docs"], marker = "extra == 'documents'", specifier = ">=0.18.14" },
     { name = "wikipedia-api", marker = "extra == 'wiki'", specifier = ">=0.8.1" },
 ]
-provides-extras = ["litllm", "search", "scholar", "wiki", "e2b", "local-python", "local-bash", "documents", "image", "video", "utils", "ppt-gen"]
+provides-extras = ["litllm", "search", "scholar", "wiki", "e2b", "local-python", "local-bash", "documents", "image", "video", "utils", "swerex", "ppt-gen"]
 
 [package.metadata.requires-dev]
 dev = [

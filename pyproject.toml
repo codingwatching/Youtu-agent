@@ -65,6 +65,11 @@ documents = [
 image = ["pillow>=11.3.0"]
 video = ["google-genai>=1.38.0"]
 utils = ["docker>=7.1.0", "tiktoken>=0.11.0"]
+swerex = [
+    "swe-rex>=1.4.0",
+    "tencentcloud-sdk-python-ags",
+    "tencentcloud-sdk-python-common",
+]
 # PPT generation example dependencies
 ppt-gen = [
     "pillow>=11.3.0",

@@ -1,0 +1,43 @@
+# SWE-ReX + AGS remote coding environment configuration.
+#
+# Usage:
+#   defaults:
+#     - /env/swerex@env
+
+name: swerex
+config:
+  # Deployment type: "ags" (Tencent AGS sandbox) or "remote" (existing SWE-ReX server)
+  deployment_type: ags
+
+  # --- AGS deployment parameters ---
+  secret_id: ${oc.env:TENCENTCLOUD_SECRET_ID}
+  secret_key: ${oc.env:TENCENTCLOUD_SECRET_KEY}
+  region: ap-guangzhou
+  domain: ap-guangzhou.tencentags.com
+  tool_id: ${oc.env:AGS_SANDBOXTOOL_ID} # AGS SandboxTool ID
+  # Container image — AGS only supports enterprise/personal TCR registries, NOT Docker Hub.
+  # For SWE-bench, each task overrides this with its own per-instance image, e.g.:
+  #   swebenchdocker.tencentcloudcr.com/swebench/sweb.eval.x86_64.{instance_id}:latest
+  image: ${oc.env:AGS_SANDBOXTOOL_IMAGE}
+  image_registry_type: enterprise     # AGS only supports "enterprise" or "personal"
+  role_arn: ${oc.env:AGS_SANDBOXTOOL_ROLEARN}
+  cpu: "2"
+  memory: "4Gi"
+  timeout: "2h"
+  port: 8000
+  startup_timeout: 600.0
+  runtime_timeout: 600.0
+
+  # Storage mount for SWE-ReX binary
+  mount_name: rex
+  mount_image: ${oc.env:AGS_MOUNT_IMAGE_ID}
+  mount_image_registry_type: enterprise
+  mount_path: /nix
+  image_subpath: /nix
+  mount_readonly: false
+
+  # --- Session parameters ---
+  workspace: /                       # Agent working directory
+  bash_timeout: 120                  # Per-command timeout (seconds)
+  session_name: default
+  post_startup_commands: []          # Commands to run after session creation

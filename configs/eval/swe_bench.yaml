@@ -3,7 +3,7 @@ defaults:
   - /agents/swe/swe_bench@agent
   - _self_
 
-exp_id: "swe_bench_verified"
+exp_id: "swe_bench_verified_test01"
 
 data:
   dataset: "SWEBench_Verified"

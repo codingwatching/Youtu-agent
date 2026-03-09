@@ -168,8 +168,8 @@ class TestSWERexEnvBuild:
         await env.build()
 
         mock_build_ags.assert_called_once()
-        # workspace == "/", so no cd command
-        mock_runtime.run_in_session.assert_not_called()
+        # workspace == "/", so only the pager-disable command runs (no cd)
+        assert mock_runtime.run_in_session.call_count == 1
 
     @patch("utu.env.swerex_env.SWERexEnv._build_remote", new_callable=AsyncMock)
     async def test_build_with_post_startup_commands(self, mock_build_remote):
@@ -183,8 +183,8 @@ class TestSWERexEnvBuild:
         mock_build_remote.side_effect = side_effect
         await env.build()
 
-        # Two post-startup commands
-        assert mock_runtime.run_in_session.call_count == 2
+        # 1 pager-disable + 2 post-startup commands
+        assert mock_runtime.run_in_session.call_count == 3
 
 
 class TestSWERexEnvCleanup:

@@ -82,7 +82,11 @@ class SWERexEnv(BaseEnv):
         logger.info("SWE-ReX bash session created: %s (output=%s)", self._session_name, resp.output[:200])
 
         # Run post-startup commands (cd to workspace, env setup, etc.).
-        startup_cmds = []
+        startup_cmds = [
+            # Disable interactive pagers (git, less, man, etc.) to prevent
+            # pexpect hangs in the pseudo-terminal.
+            "export GIT_PAGER=cat PAGER=cat",
+        ]
         if self._workspace and self._workspace != "/":
             startup_cmds.append(f"cd {self._workspace}")
         startup_cmds.extend(self._post_startup_commands)

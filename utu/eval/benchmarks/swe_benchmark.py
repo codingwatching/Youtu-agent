@@ -46,9 +46,14 @@ class SWEBenchmark(BaseBenchmark):
             result = await agent.run(sample.augmented_question, trace_id=trace_id)
 
             # Extract the patch before tearing down the sandbox.
+            # Write to file + read_file to avoid pexpect pager/buffer issues
+            # (git diff through the bash tool can trigger pager hangs).
             if hasattr(agent, "env") and agent.env is not None:
                 try:
-                    patch = await agent.env._run_bash("cd /testbed && git diff")
+                    await agent.env._run_bash(
+                        "cd /testbed && git add -A && git diff --cached > /tmp/model.patch"
+                    )
+                    patch = await agent.env._read_file("/tmp/model.patch")
                 except Exception as e:
                     logger.warning("Failed to extract patch for %s: %s", meta.get("instance_id", "?"), e)
         except Exception:

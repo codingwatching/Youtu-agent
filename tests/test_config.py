@@ -33,6 +33,7 @@ def test_load_agent_config():
     config = ConfigLoader.load_agent_config("examples/svg_generator")
     config = ConfigLoader.load_agent_config("examples/paper_collector")
     config = ConfigLoader.load_agent_config("orchestrator/base_test")
+    config = ConfigLoader.load_agent_config("swe/swe_bench")
     print(config)
     # print(json.dumps(config.model_dump(), indent=2))
 
@@ -41,3 +42,7 @@ def test_load_eval_config():
     config = ConfigLoader.load_eval_config("ww")
     config = ConfigLoader.load_eval_config("gaia")
     print(json.dumps(config.model_dump(), indent=2))
+
+
+if __name__ == '__main__':
+    test_load_agent_config()

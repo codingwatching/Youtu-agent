@@ -3,6 +3,7 @@ import asyncio
 
 from utu.config import ConfigLoader, EvalConfig
 from utu.eval import BaseBenchmark
+from utu.eval.benchmarks.swe_benchmark import SWEBenchmark
 
 
 def get_eval_config(args: argparse.Namespace) -> EvalConfig:
@@ -41,7 +42,10 @@ async def main():
 
     config = get_eval_config(args)
 
-    runner = BaseBenchmark(config)
+    if "SWEBench" in config.data.dataset:
+        runner = SWEBenchmark(config)
+    else:
+        runner = BaseBenchmark(config)
     match args.step:
         case "all":
             await runner.main()

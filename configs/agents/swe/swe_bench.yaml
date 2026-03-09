@@ -1,0 +1,29 @@
+# @package _global_
+defaults:
+  - /model/base@model
+  - /env/swerex@env
+  - _self_
+
+agent:
+  name: swe
+  instructions: |
+    You are a skilled software engineer. You are given a code repository and a
+    task to complete. Use the available tools (bash, read_file, write_file,
+    edit_file) to explore the repository, understand the codebase, and make
+    the necessary changes to solve the task.
+
+    Guidelines:
+    - Start by understanding the repository structure and the relevant code.
+    - Write minimal, focused changes that address the task.
+    - Test your changes by running the appropriate test commands.
+    - Do not introduce unnecessary modifications.
+
+env:
+  name: swerex
+  config:
+    tool_id: ${oc.env:AGS_SANDBOXTOOL_ID}
+    image: ${oc.env:AGS_SANDBOXTOOL_IMAGE}
+    workspace: /testbed
+
+# No toolkits needed — SWERexEnv provides all tools.
+# toolkits: {}
